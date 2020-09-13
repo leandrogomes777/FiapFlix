@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSCServiceReceive", "CSCSer
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoteAndClassificationService", "VoteAndClassificationService\VoteAndClassificationService.csproj", "{84AD0066-895C-4955-88F9-CF648042786E}"
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{37A20640-51AA-434D-8AC4-A717F26A8CDD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{84AD0066-895C-4955-88F9-CF648042786E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84AD0066-895C-4955-88F9-CF648042786E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84AD0066-895C-4955-88F9-CF648042786E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37A20640-51AA-434D-8AC4-A717F26A8CDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37A20640-51AA-434D-8AC4-A717F26A8CDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37A20640-51AA-434D-8AC4-A717F26A8CDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37A20640-51AA-434D-8AC4-A717F26A8CDD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

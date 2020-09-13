@@ -1,0 +1,35 @@
+version: '3.4'
+
+services:
+
+version: "3"
+services:
+    sqldata:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+    environment:
+      - SA_PASSWORD=Pass@word
+      - ACCEPT_EULA=Y
+    ports:
+      - "1433:1433"
+
+  cscservicereceive:
+    image: ${DOCKER_REGISTRY-}cscservicereceive
+    build:
+      context: .
+      dockerfile: CSCServiceReceive/Dockerfile
+
+  movieapi:
+    image: ${DOCKER_REGISTRY-}movieapi
+    build:
+      context: .
+      dockerfile: MovieAPI/Dockerfile
+
+
+  voteandclassificationservice:
+    image: ${DOCKER_REGISTRY-}voteandclassificationservice
+    build:
+      context: .
+      dockerfile: VoteAndClassificationService/Dockerfile
+
+   
+
