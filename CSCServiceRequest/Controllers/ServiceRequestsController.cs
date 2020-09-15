@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CSCServiceRequest.Models;
+using Confluent.Kafka;
+using System.Text.Json;
 
 namespace CSCServiceRequest.Controllers
 {
@@ -82,6 +84,8 @@ namespace CSCServiceRequest.Controllers
             _context.ServiceRequest.Add(serviceRequest);
             await _context.SaveChangesAsync();
 
+            await PutOnKafkaQueue(serviceRequest);
+
             return CreatedAtAction("GetServiceRequest", new { id = serviceRequest.ServiceRequestId }, serviceRequest);
         }
 
@@ -104,6 +108,37 @@ namespace CSCServiceRequest.Controllers
         private bool ServiceRequestExists(long id)
         {
             return _context.ServiceRequest.Any(e => e.ServiceRequestId == id);
+        }
+
+
+        /// <summary>
+        /// Adiciona o item na fila do Kafka
+        /// </summary>
+        /// <returns></returns>
+        [NonAction]
+        [ApiExplorerSettings(IgnoreApi = true)]
+        private async Task<bool> PutOnKafkaQueue(ServiceRequest item)
+        {
+            var config = new ProducerConfig
+            {
+                BootstrapServers = "192.168.0.22:9092"
+            };
+
+            var producer = new ProducerBuilder<Null, string>(config).Build();
+
+            using (producer)
+            {
+                try
+                {
+                    var result = await producer.ProduceAsync("csc_new_support", new Message<Null, string> { Value = JsonSerializer.Serialize(item) });
+
+                    return true;
+                }
+                catch (ProduceException<Null, string> ex)
+                {
+                    throw ex;
+                }
+            }
         }
     }
 }
