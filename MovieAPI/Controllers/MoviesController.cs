@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -106,5 +107,25 @@ namespace MovieAPI.Controllers
         {
             return _context.Movies.Any(e => e.MovieId == id);
         }
+
+        /// <summary>
+        /// Procurar filmes por palavra
+        /// </summary>
+        /// <param name="keyword"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Movies>>> SearchMoviesByKeyWord(string keyword)
+        {
+            return await _context.Movies.Where(x => x.Name.Contains(keyword)).ToListAsync();
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Movies>>> SearchMoviesByGenre(long genreID)
+        {
+            var resultGenres = _context.MovieGenres.Where(x => x.GenreId == genreID).Select(x=> x.MovieId) ;
+
+            return await _context.Movies.Where(x => resultGenres.Contains(x.MovieId)).ToListAsync();
+        }
+
     }
 }

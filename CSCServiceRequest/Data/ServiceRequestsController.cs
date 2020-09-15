@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using CSCServiceReceive.Models;
+using CSCServiceRequest.Models;
 
-namespace CSCServiceReceive.Controllers
+namespace CSCServiceRequest.Data
 {
     [Route("api/[controller]")]
     [ApiController]

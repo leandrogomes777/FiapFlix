@@ -11,7 +11,7 @@ namespace CSCConsumerService
             var config = new ConsumerConfig
             {
                 GroupId = "csc_service",
-                BootstrapServers = "localhost:9092",
+                BootstrapServers = "192.168.0.22:9092",
                 AutoOffsetReset = AutoOffsetReset.Earliest
             };
 

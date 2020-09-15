@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using CSCServiceReceive.Models;
+using CSCServiceRequest.Models;
 
     public class DatabaseContext : DbContext
     {
@@ -12,5 +12,5 @@ using CSCServiceReceive.Models;
         {
         }
 
-        public DbSet<CSCServiceReceive.Models.ServiceRequest> ServiceRequest { get; set; }
+        public DbSet<CSCServiceRequest.Models.ServiceRequest> ServiceRequest { get; set; }
     }

@@ -12,7 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSCServiceReceive
+namespace CSCServiceRequest
 {
     public class Startup
     {

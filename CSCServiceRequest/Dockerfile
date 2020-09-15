@@ -7,16 +7,16 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["CSCServiceReceive/CSCServiceReceive.csproj", "CSCServiceReceive/"]
-RUN dotnet restore "CSCServiceReceive/CSCServiceReceive.csproj"
+COPY ["CSCServiceRequest/CSCServiceRequest.csproj", "CSCServiceRequest/"]
+RUN dotnet restore "CSCServiceRequest/CSCServiceRequest.csproj"
 COPY . .
-WORKDIR "/src/CSCServiceReceive"
-RUN dotnet build "CSCServiceReceive.csproj" -c Release -o /app/build
+WORKDIR "/src/CSCServiceRequest"
+RUN dotnet build "CSCServiceRequest.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "CSCServiceReceive.csproj" -c Release -o /app/publish
+RUN dotnet publish "CSCServiceRequest.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "CSCServiceReceive.dll"]
+ENTRYPOINT ["dotnet", "CSCServiceRequest.dll"]

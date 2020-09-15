@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "CSCServiceReceive": {
+    "CSCServiceRequest": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "weatherforecast",

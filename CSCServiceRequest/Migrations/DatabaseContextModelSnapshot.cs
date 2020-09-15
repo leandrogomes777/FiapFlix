@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace CSCServiceReceive.Migrations
+namespace CSCServiceRequest.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
     partial class DatabaseContextModelSnapshot : ModelSnapshot
@@ -18,7 +18,7 @@ namespace CSCServiceReceive.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("CSCServiceReceive.Models.ServiceRequest", b =>
+            modelBuilder.Entity("CSCServiceRequest.Models.ServiceRequest", b =>
                 {
                     b.Property<long>("ServiceRequestId")
                         .ValueGeneratedOnAdd()
@@ -38,7 +38,7 @@ namespace CSCServiceReceive.Migrations
                     b.ToTable("ServiceRequest");
                 });
 
-            modelBuilder.Entity("CSCServiceReceive.Models.TechnicalProblems", b =>
+            modelBuilder.Entity("CSCServiceRequest.Models.TechnicalProblems", b =>
                 {
                     b.Property<long>("TechnicalProblemsId")
                         .ValueGeneratedOnAdd()
@@ -53,9 +53,9 @@ namespace CSCServiceReceive.Migrations
                     b.ToTable("TechnicalProblems");
                 });
 
-            modelBuilder.Entity("CSCServiceReceive.Models.ServiceRequest", b =>
+            modelBuilder.Entity("CSCServiceRequest.Models.ServiceRequest", b =>
                 {
-                    b.HasOne("CSCServiceReceive.Models.TechnicalProblems", "TechnicalProblem")
+                    b.HasOne("CSCServiceRequest.Models.TechnicalProblems", "TechnicalProblem")
                         .WithMany()
                         .HasForeignKey("TechnicalProblemsId");
                 });

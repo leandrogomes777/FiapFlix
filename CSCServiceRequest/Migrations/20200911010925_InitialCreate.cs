@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace CSCServiceReceive.Migrations
+namespace CSCServiceRequest.Migrations
 {
     public partial class InitialCreate : Migration
     {
