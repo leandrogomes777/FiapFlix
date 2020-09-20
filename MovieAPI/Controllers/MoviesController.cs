@@ -113,12 +113,19 @@ namespace MovieAPI.Controllers
         /// </summary>
         /// <param name="keyword"></param>
         /// <returns></returns>
+        [Route("[action]/{keyword}")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Movies>>> SearchMoviesByKeyWord(string keyword)
         {
             return await _context.Movies.Where(x => x.Name.Contains(keyword)).ToListAsync();
         }
 
+        /// <summary>
+        /// Retorna filmes por gênero
+        /// </summary>
+        /// <param name="genreID"></param>
+        /// <returns></returns>
+        [Route("[action]/{genreID}")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Movies>>> SearchMoviesByGenre(long genreID)
         {

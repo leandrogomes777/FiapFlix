@@ -14,6 +14,8 @@ namespace MovieAPI
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
+
         }
 
         public IConfiguration Configuration { get; }
@@ -50,6 +52,7 @@ namespace MovieAPI
             {
                 c.SwaggerEndpoint("v1/swagger.json", "MyAPI V1");
             });
+
 
             app.UseHttpsRedirection();
 

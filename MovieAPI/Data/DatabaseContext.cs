@@ -2,7 +2,9 @@
 using MovieAPI.Model;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace MovieAPI.Context
@@ -32,6 +34,56 @@ namespace MovieAPI.Context
                 .HasOne(bc => bc.Genre)
                 .WithMany(c => c.MoviesGenres)
                 .HasForeignKey(bc => bc.GenreId);
+
+
+            Dictionary<string, long> _genresKeyValue = new Dictionary<string, long>();
+            string[] genresFile = File.ReadAllLines("genres.csv");
+            int _id = 0;
+
+            foreach(string genreLine in genresFile)
+            {
+                _id++;
+                modelBuilder.Entity<Genres>().HasData(
+                    new Genres()
+                    {
+                        GenreId = _id,
+                        Genre = genreLine
+                    }
+                    );
+
+                _genresKeyValue.Add(genreLine, _id);
+            }
+
+            string[] moviesFile = File.ReadAllLines("movies.csv");
+            Regex CSVParser = new Regex(",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))");
+
+            _id = 0;
+            foreach (string movieLine in moviesFile)
+            {
+                string[] movieData = CSVParser.Split(movieLine);
+
+                _id++;
+                modelBuilder.Entity<Movies>().HasData(
+                    new Movies()
+                    {
+                        MovieId = _id,
+                        Name = movieData[1]
+                    } 
+                    );
+
+                string[] genres = movieData[2].Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
+
+                foreach(string genre in genres)
+                {
+                    modelBuilder.Entity<MovieGenres>().HasData(
+                    new MovieGenres()
+                    {
+                        MovieId = _id,
+                        GenreId = _genresKeyValue[genre]
+                    }
+                    );
+                }
+            }
         }
     }
 }

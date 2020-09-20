@@ -20,12 +20,12 @@ namespace UserAPI.Models
             set;
         }
 
-        public List<long> WatchedMovies
+        public IList<WatchedMovies> WatchedMovies
         {
             get;set;
         }
 
-        public List<long> WatchLaterMovies
+        public IList<WatchLaterMovies> WatchLaterMovies
         {
             get; set;
         }
