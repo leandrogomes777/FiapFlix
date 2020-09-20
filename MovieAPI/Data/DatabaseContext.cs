@@ -3,9 +3,7 @@ using MovieAPI.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace MovieAPI.Context
 {
@@ -40,7 +38,7 @@ namespace MovieAPI.Context
             string[] genresFile = File.ReadAllLines("genres.csv");
             int _id = 0;
 
-            foreach(string genreLine in genresFile)
+            foreach (string genreLine in genresFile)
             {
                 _id++;
                 modelBuilder.Entity<Genres>().HasData(
@@ -68,12 +66,12 @@ namespace MovieAPI.Context
                     {
                         MovieId = _id,
                         Name = movieData[1]
-                    } 
+                    }
                     );
 
                 string[] genres = movieData[2].Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
 
-                foreach(string genre in genres)
+                foreach (string genre in genres)
                 {
                     modelBuilder.Entity<MovieGenres>().HasData(
                     new MovieGenres()

@@ -26,17 +26,17 @@ namespace UserAPI.Migrations
                     Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     MovieId = table.Column<long>(nullable: false),
-                    UsersUserId = table.Column<long>(nullable: true)
+                    UsersId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_WatchedMovies", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_WatchedMovies_Users_UsersUserId",
-                        column: x => x.UsersUserId,
+                        name: "FK_WatchedMovies_Users_UsersId",
+                        column: x => x.UsersId,
                         principalTable: "Users",
                         principalColumn: "UserId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -46,28 +46,28 @@ namespace UserAPI.Migrations
                     Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     MovieId = table.Column<long>(nullable: false),
-                    UsersUserId = table.Column<long>(nullable: true)
+                    UsersId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_WatchLaterMovies", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_WatchLaterMovies_Users_UsersUserId",
-                        column: x => x.UsersUserId,
+                        name: "FK_WatchLaterMovies_Users_UsersId",
+                        column: x => x.UsersId,
                         principalTable: "Users",
                         principalColumn: "UserId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_WatchedMovies_UsersUserId",
+                name: "IX_WatchedMovies_UsersId",
                 table: "WatchedMovies",
-                column: "UsersUserId");
+                column: "UsersId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_WatchLaterMovies_UsersUserId",
+                name: "IX_WatchLaterMovies_UsersId",
                 table: "WatchLaterMovies",
-                column: "UsersUserId");
+                column: "UsersId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

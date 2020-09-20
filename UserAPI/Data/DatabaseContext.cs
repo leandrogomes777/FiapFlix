@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using UserAPI.Models;
+﻿using Microsoft.EntityFrameworkCore;
 
-    public class DatabaseContext : DbContext
+public class DatabaseContext : DbContext
+{
+    public DatabaseContext(DbContextOptions<DatabaseContext> options)
+        : base(options)
     {
-        public DatabaseContext (DbContextOptions<DatabaseContext> options)
-            : base(options)
-        {
-        }
-
-        public DbSet<UserAPI.Models.Users> Users { get; set; }
     }
+
+
+    public DbSet<UserAPI.Models.Users> Users { get; set; }
+}

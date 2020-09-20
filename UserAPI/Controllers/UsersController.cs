@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using UserAPI.Models;
 
 namespace UserAPI.Controllers
@@ -24,7 +26,8 @@ namespace UserAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Users>>> GetUsers()
         {
-            return await _context.Users.ToListAsync();
+            var result = _context.Users.Include(watched => watched.WatchedMovies).Include(later => later.WatchLaterMovies);
+            return await result.ToListAsync();
         }
 
         // GET: api/Users/5
@@ -61,6 +64,97 @@ namespace UserAPI.Controllers
             catch (DbUpdateConcurrencyException)
             {
                 if (!UsersExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        [HttpPut("marktowatchlater/{userId}/{movieId}")]
+        public async Task<IActionResult> MarkToWatchLater(long userId, long movieId)
+        {
+            var users = await _context.Users.FindAsync(userId);
+
+            if(null == users)
+            {
+                return BadRequest();
+            }
+            
+            if(users.WatchLaterMovies != null && users.WatchLaterMovies.FirstOrDefault(x => x.MovieId == movieId) != null)
+            {
+                return NoContent();
+            }
+            else
+            {
+                var markList = new List<WatchLaterMovies>
+                {
+                    new WatchLaterMovies() { Users = users, MovieId = movieId }
+                };
+
+                users.WatchLaterMovies = markList;
+            }
+
+            
+            _context.Entry(users).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!UsersExists(userId))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        [HttpPut("markwatched/{userId}/{movieId}")]
+        public async Task<IActionResult> Watched(long userId, long movieId)
+        {
+            var users = await _context.Users.FindAsync(userId);
+
+            if (null == users)
+            {
+                return BadRequest();
+            }
+
+            if (users.WatchedMovies != null && users.WatchedMovies.FirstOrDefault(x => x.MovieId == movieId) != null)
+            {
+                return NoContent();
+            }
+            else
+            {
+                var markList = new List<WatchedMovies>
+                {
+                    new WatchedMovies() { Users = users, MovieId = movieId }
+                };
+
+                users.WatchedMovies = markList;
+            }
+            
+            _context.Entry(users).State = EntityState.Modified;
+            
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!UsersExists(userId))
                 {
                     return NotFound();
                 }
