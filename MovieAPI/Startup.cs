@@ -36,6 +36,8 @@ namespace MovieAPI
                     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
 
+            services.AddSingleton<IConfiguration>(Configuration);
+
             services.AddControllers();
         }
 

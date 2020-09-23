@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Runtime.InteropServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -104,6 +107,12 @@ namespace VoteAndClassificationService.Controllers
         private bool MovieGradeExists(long id)
         {
             return _context.MovieGrade.Any(e => e.MovieGradeID == id);
+        }
+
+        [HttpGet("getmoviesorderedbygrade/{lenght?}")]
+        public async Task<ActionResult<IEnumerable<long>>> GetMoviesOrderedByGrade(int? lenght = 50)
+        { 
+            return await _context.MovieGrade.GroupBy(m => m.MovieID).Select(x => new { MovieID = x.Key, AverageGrade = x.Average(m => m.Grade) }).OrderByDescending(o => o.AverageGrade).Select(m => m.MovieID).ToListAsync();
         }
     }
 }

@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using MovieAPI.Context;
 using MovieAPI.Model;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace MovieAPI.Controllers
 {
@@ -16,10 +17,21 @@ namespace MovieAPI.Controllers
     public class MoviesController : ControllerBase
     {
         private readonly DatabaseContext _context;
+        private readonly IConfiguration _configuration;
 
-        public MoviesController(DatabaseContext context)
+        private HttpClient _clientVoteAndClassification;
+
+        public MoviesController(DatabaseContext context, IConfiguration configurarion)
         {
             _context = context;
+            _configuration = configurarion;
+
+            HttpClientHandler clientHandler = new HttpClientHandler();
+            clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+
+            _clientVoteAndClassification = new HttpClient(clientHandler);
+
+            _clientVoteAndClassification.BaseAddress = new Uri(_configuration["ClassificationAndVoteService"]);
         }
 
         // GET: api/Movies
@@ -125,11 +137,37 @@ namespace MovieAPI.Controllers
         /// </summary>
         /// <param name="genreID"></param>
         /// <returns></returns>
+        [HttpGet("moviesbygrade/{maxLenght}")]
+        public async Task<ActionResult<IEnumerable<Movies>>> GetMoviesByGrade(long maxLenght)
+        {
+            HttpResponseMessage response = await _clientVoteAndClassification.
+                                                                GetAsync($"getmoviesorderedbygrade/{maxLenght}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                List<long> classification = JsonConvert.DeserializeObject<List<long>>(response.Content.ReadAsStringAsync().Result);
+
+                var allResults = await _context.Movies.ToListAsync();
+
+                var result = from a in allResults.Select((r, i) => new { item = r, Index = i })
+                              from b in classification.Select((r, i) => new { item = r, Index = i })
+                                                .Where(b => a.item.MovieId == b.item).DefaultIfEmpty()
+                              orderby (b == null ? allResults.Count() + a.Index : b.Index)
+                              select a.item;
+
+                return result.ToList();
+            }
+            else
+            {
+                return BadRequest(response);
+            }
+        }
+
         [Route("[action]/{genreID}")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Movies>>> SearchMoviesByGenre(long genreID)
         {
-            var resultGenres = _context.MovieGenres.Where(x => x.GenreId == genreID).Select(x=> x.MovieId) ;
+            var resultGenres = _context.MovieGenres.Where(x => x.GenreId == genreID).Select(x => x.MovieId);
 
             return await _context.Movies.Where(x => resultGenres.Contains(x.MovieId)).ToListAsync();
         }

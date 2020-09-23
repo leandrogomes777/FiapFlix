@@ -2,6 +2,7 @@ version: '3.4'
 
 services:
 
+services:
   zookeeper:
     image: wurstmeister/zookeeper:3.4.6
     expose:
@@ -23,10 +24,16 @@ services:
   sqldata:
     image: mcr.microsoft.com/mssql/server:2017-latest
     environment:
-      - SA_PASSWORD=Pass@word
-      - ACCEPT_EULA=Y
+        - SA_PASSWORD=Pass@word9
+        - ACCEPT_EULA=Y
     ports:
-      - "1433:1433"
+        - "1433:1433"
+
+  movieapi:
+    image: ${DOCKER_REGISTRY-}movieapi
+    build:
+      context: .
+      dockerfile: MovieAPI/Dockerfile
 
   cscservicerequest:
     image: ${DOCKER_REGISTRY-}cscservicerequest
@@ -34,11 +41,12 @@ services:
       context: .
       dockerfile: CSCServiceRequest/Dockerfile
 
-  movieapi:
-    image: ${DOCKER_REGISTRY-}movieapi
+
+  userapi:
+    image: ${DOCKER_REGISTRY-}userapi
     build:
       context: .
-      dockerfile: MovieAPI/Dockerfile
+      dockerfile: UserAPI/Dockerfile
 
 
   voteandclassificationservice:
@@ -47,5 +55,10 @@ services:
       context: .
       dockerfile: VoteAndClassificationService/Dockerfile
 
-   
+
+  cscconsumerserviceconsume:
+    image: ${DOCKER_REGISTRY-}cscconsumerserviceconsume
+    build:
+      context: .
+      dockerfile: CSCConsumerService/Dockerfile
 
