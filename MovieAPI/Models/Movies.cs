@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MovieAPI.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -32,5 +33,11 @@ namespace MovieAPI.Model
             get;
             set;
         }
+
+        public MovieDetail MovieDetail
+        {
+            get; set;
+        }
+
     }
 }

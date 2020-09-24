@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
+using MovieAPI.Models;
 
 namespace MovieAPI.Context
 {
@@ -18,7 +19,7 @@ namespace MovieAPI.Context
         public DbSet<Movies> Movies { get; set; }
         public DbSet<Genres> Genres { get; set; }
         public DbSet<MovieGenres> MovieGenres { get; set; }
-
+        public DbSet<MovieAPI.Models.MovieDetail> MovieDetail { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -32,6 +33,11 @@ namespace MovieAPI.Context
                 .HasOne(bc => bc.Genre)
                 .WithMany(c => c.MoviesGenres)
                 .HasForeignKey(bc => bc.GenreId);
+
+            modelBuilder.Entity<Movies>()
+                .HasOne(b => b.MovieDetail)
+                .WithOne(c => c.Movies)
+                .HasForeignKey<MovieDetail>(bc => bc.MovieId);
 
 
             Dictionary<string, long> _genresKeyValue = new Dictionary<string, long>();
@@ -82,6 +88,6 @@ namespace MovieAPI.Context
                     );
                 }
             }
-        }
+        }        
     }
 }
