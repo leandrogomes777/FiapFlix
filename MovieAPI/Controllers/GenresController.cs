@@ -22,6 +22,10 @@ namespace MovieAPI.Controllers
         }
 
         // GET: api/Genres
+        /// <summary>
+        /// Retorna lista de gêneros
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Genres>>> GetGenres()
         {
@@ -29,6 +33,11 @@ namespace MovieAPI.Controllers
         }
 
         // GET: api/Genres/5
+        /// <summary>
+        /// Retorna gênero pelo id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<Genres>> GetGenres(long id)
         {
@@ -45,6 +54,12 @@ namespace MovieAPI.Controllers
         // PUT: api/Genres/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /// <summary>
+        /// Atualiza gênero
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="genres"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutGenres(long id, Genres genres)
         {
@@ -77,6 +92,11 @@ namespace MovieAPI.Controllers
         // POST: api/Genres
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /// <summary>
+        /// Cadastra gênero
+        /// </summary>
+        /// <param name="genres"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<Genres>> PostGenres(Genres genres)
         {
@@ -87,6 +107,11 @@ namespace MovieAPI.Controllers
         }
 
         // DELETE: api/Genres/5
+        /// <summary>
+        /// Deleta gênero
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult<Genres>> DeleteGenres(long id)
         {

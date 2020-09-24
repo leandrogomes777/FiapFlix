@@ -35,6 +35,10 @@ namespace MovieAPI.Controllers
         }
 
         // GET: api/Movies
+        /// <summary>
+        /// Retorna lista de filmes
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Movies>>> GetMovies()
         {
@@ -58,6 +62,12 @@ namespace MovieAPI.Controllers
         // PUT: api/Movies/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /// <summary>
+        /// Atualiza os dados de um filme
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="movies"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutMovies(long id, Movies movies)
         {
@@ -90,6 +100,11 @@ namespace MovieAPI.Controllers
         // POST: api/Movies
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /// <summary>
+        /// Cadastra um novo filme
+        /// </summary>
+        /// <param name="movies"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<Movies>> PostMovies(Movies movies)
         {
@@ -100,6 +115,11 @@ namespace MovieAPI.Controllers
         }
 
         // DELETE: api/Movies/5
+        /// <summary>
+        /// Deleta um filme
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult<Movies>> DeleteMovies(long id)
         {
@@ -133,7 +153,7 @@ namespace MovieAPI.Controllers
         }
 
         /// <summary>
-        /// Retorna filmes por gênero
+        /// Retorna filmes ordenado pela nota
         /// </summary>
         /// <param name="genreID"></param>
         /// <returns></returns>
@@ -163,6 +183,11 @@ namespace MovieAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Procura filme por gênero
+        /// </summary>
+        /// <param name="genreID"></param>
+        /// <returns></returns>
         [Route("[action]/{genreID}")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Movies>>> SearchMoviesByGenre(long genreID)
@@ -170,6 +195,37 @@ namespace MovieAPI.Controllers
             var resultGenres = _context.MovieGenres.Where(x => x.GenreId == genreID).Select(x => x.MovieId);
 
             return await _context.Movies.Where(x => resultGenres.Contains(x.MovieId)).ToListAsync();
+        }
+
+        /// <summary>
+        /// Retorna filmes pelo gênero ordenado pelos mais assistidos
+        /// </summary>
+        /// <param name="maxLenght"></param>
+        /// <returns></returns>
+        [HttpGet("moviesbygenreandmostwatched/{maxLenght}")]
+        public async Task<ActionResult<IEnumerable<Movies>>> GetMoviesByGenresAndMostWatched (long maxLenght)
+        {
+            HttpResponseMessage response = await _clientVoteAndClassification.
+                                                                GetAsync($"getmoviesorderedbygrade/{maxLenght}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                List<long> classification = JsonConvert.DeserializeObject<List<long>>(response.Content.ReadAsStringAsync().Result);
+
+                var allResults = await _context.Movies.ToListAsync();
+
+                var result = from a in allResults.Select((r, i) => new { item = r, Index = i })
+                             from b in classification.Select((r, i) => new { item = r, Index = i })
+                                               .Where(b => a.item.MovieId == b.item).DefaultIfEmpty()
+                             orderby (b == null ? allResults.Count() + a.Index : b.Index)
+                             select a.item;
+
+                return result.ToList();
+            }
+            else
+            {
+                return BadRequest(response);
+            }
         }
 
     }

@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>VoteAndClassificationService</name>
+    </assembly>
+    <members>
+        <member name="M:VoteAndClassificationService.Controllers.MovieGradesController.GetMovieGrade">
+            <summary>
+            Lista todas as notas dadas a todos os filmes 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:VoteAndClassificationService.Controllers.MovieGradesController.GetMovieGrade(System.Int64)">
+            <summary>
+            retorna uma nota de um filme pelo id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VoteAndClassificationService.Controllers.MovieGradesController.PutMovieGrade(System.Int64,VoteAndClassificationService.Models.MovieGrade)">
+            <summary>
+            Edita uma nota
+            </summary>
+            <param name="id"></param>
+            <param name="movieGrade"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VoteAndClassificationService.Controllers.MovieGradesController.PostMovieGrade(VoteAndClassificationService.Models.MovieGrade)">
+            <summary>
+            Cadastra uma nota para um filme
+            </summary>
+            <param name="movieGrade"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VoteAndClassificationService.Controllers.MovieGradesController.DeleteMovieGrade(System.Int64)">
+            <summary>
+            Deleta uma nota pelo id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VoteAndClassificationService.Controllers.MovieGradesController.GetMoviesOrderedByGrade(System.Nullable{System.Int32})">
+            <summary>
+            Retorna filmes ordenados pela nota média
+            </summary>
+            <param name="lenght"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

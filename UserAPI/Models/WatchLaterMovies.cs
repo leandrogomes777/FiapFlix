@@ -8,7 +8,7 @@ namespace UserAPI.Models
 {
     public class WatchLaterMovies
     {
-        public long Id
+        public long WatchLaterMoviesId
         {
             get; set;
         }

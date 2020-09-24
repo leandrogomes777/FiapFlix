@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MovieAPI.Context;
+using System.IO;
 using System.Linq;
 
 namespace MovieAPI
@@ -30,6 +31,9 @@ namespace MovieAPI
             services.AddSwaggerGen(c =>
             {
                 c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
+
+                var filePath = Path.Combine(System.AppContext.BaseDirectory, "MovieAPI.xml");
+                c.IncludeXmlComments(filePath);
             });
 
             services.AddControllers().AddNewtonsoftJson(options =>
@@ -47,6 +51,12 @@ namespace MovieAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            }
+
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetRequiredService<DatabaseContext>();
+                context.Database.Migrate();
             }
 
             app.UseSwagger();

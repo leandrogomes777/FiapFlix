@@ -9,7 +9,7 @@ namespace UserAPI.Models
     public class Users
     {
         [Key]
-        public long UserId
+        public long UsersId
         {
             get;set;
         }

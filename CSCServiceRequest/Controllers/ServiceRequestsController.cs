@@ -23,6 +23,10 @@ namespace CSCServiceRequest.Controllers
         }
 
         // GET: api/ServiceRequests
+        /// <summary>
+        /// Retorna lista de chamados
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ServiceRequest>>> GetServiceRequest()
         {
@@ -30,6 +34,11 @@ namespace CSCServiceRequest.Controllers
         }
 
         // GET: api/ServiceRequests/5
+        /// <summary>
+        /// Retorna chamado pelo id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<ServiceRequest>> GetServiceRequest(long id)
         {
@@ -46,6 +55,12 @@ namespace CSCServiceRequest.Controllers
         // PUT: api/ServiceRequests/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /// <summary>
+        /// Edita chamado
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="serviceRequest"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutServiceRequest(long id, ServiceRequest serviceRequest)
         {
@@ -78,6 +93,11 @@ namespace CSCServiceRequest.Controllers
         // POST: api/ServiceRequests
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /// <summary>
+        /// Cadastra chamado e adiciona na fila do kafka
+        /// </summary>
+        /// <param name="serviceRequest"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<ServiceRequest>> PostServiceRequest(ServiceRequest serviceRequest)
         {
@@ -90,6 +110,11 @@ namespace CSCServiceRequest.Controllers
         }
 
         // DELETE: api/ServiceRequests/5
+        /// <summary>
+        /// Deleta chamado
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult<ServiceRequest>> DeleteServiceRequest(long id)
         {

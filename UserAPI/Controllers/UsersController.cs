@@ -1,12 +1,9 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using UserAPI.Models;
 
 namespace UserAPI.Controllers
@@ -23,6 +20,10 @@ namespace UserAPI.Controllers
         }
 
         // GET: api/Users
+        /// <summary>
+        /// Retorna lista de usuários
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Users>>> GetUsers()
         {
@@ -31,6 +32,11 @@ namespace UserAPI.Controllers
         }
 
         // GET: api/Users/5
+        /// <summary>
+        /// Retorna usuário pelo id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<Users>> GetUsers(long id)
         {
@@ -47,10 +53,16 @@ namespace UserAPI.Controllers
         // PUT: api/Users/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /// <summary>
+        /// Atualiza um usuário
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="users"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUsers(long id, Users users)
         {
-            if (id != users.UserId)
+            if (id != users.UsersId)
             {
                 return BadRequest();
             }
@@ -76,17 +88,23 @@ namespace UserAPI.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Marca o filme para ser assistido depois
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="movieId"></param>
+        /// <returns></returns>
         [HttpPut("marktowatchlater/{userId}/{movieId}")]
         public async Task<IActionResult> MarkToWatchLater(long userId, long movieId)
         {
             var users = await _context.Users.FindAsync(userId);
 
-            if(null == users)
+            if (null == users)
             {
                 return BadRequest();
             }
-            
-            if(users.WatchLaterMovies != null && users.WatchLaterMovies.FirstOrDefault(x => x.MovieId == movieId) != null)
+
+            if (users.WatchLaterMovies != null && users.WatchLaterMovies.FirstOrDefault(x => x.MovieId == movieId) != null)
             {
                 return NoContent();
             }
@@ -100,7 +118,6 @@ namespace UserAPI.Controllers
                 users.WatchLaterMovies = markList;
             }
 
-            
             _context.Entry(users).State = EntityState.Modified;
 
             try
@@ -122,6 +139,13 @@ namespace UserAPI.Controllers
             return NoContent();
         }
 
+
+        /// <summary>
+        /// Marca o filme como assistido pelo usuário
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="movieId"></param>
+        /// <returns></returns>
         [HttpPut("markwatched/{userId}/{movieId}")]
         public async Task<IActionResult> Watched(long userId, long movieId)
         {
@@ -145,9 +169,9 @@ namespace UserAPI.Controllers
 
                 users.WatchedMovies = markList;
             }
-            
+
             _context.Entry(users).State = EntityState.Modified;
-            
+
             try
             {
                 await _context.SaveChangesAsync();
@@ -167,19 +191,51 @@ namespace UserAPI.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Retorna os filmes ordernados pelos mais vistos
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("getmostwatched")]
+        public async Task<ActionResult<Dictionary<long, long>>> MostWatched()
+        {
+            try
+            {
+                var sublist = await _context.Users.SelectMany(x => x.WatchedMovies).ToListAsync();
+                var data = sublist.GroupBy(x => x.MovieId).ToDictionary(c => c.Key, c => c.LongCount());
+                data  = data.OrderByDescending(x=> x.Value).ToDictionary(x=> x.Key, x => x.Value);
+
+                return data;            
+            }
+            catch (System.Exception ex)
+            {
+                throw;
+            }
+        }
+
+
         // POST: api/Users
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /// <summary>
+        /// Inclui um usuário
+        /// </summary>
+        /// <param name="users"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<Users>> PostUsers(Users users)
         {
             _context.Users.Add(users);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUsers", new { id = users.UserId }, users);
+            return CreatedAtAction("GetUsers", new { id = users.UsersId }, users);
         }
 
         // DELETE: api/Users/5
+        /// <summary>
+        /// Deleta um usuário
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult<Users>> DeleteUsers(long id)
         {
@@ -197,7 +253,7 @@ namespace UserAPI.Controllers
 
         private bool UsersExists(long id)
         {
-            return _context.Users.Any(e => e.UserId == id);
+            return _context.Users.Any(e => e.UsersId == id);
         }
     }
 }

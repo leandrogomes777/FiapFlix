@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CSCServiceRequest</name>
+    </assembly>
+    <members>
+        <member name="M:CSCServiceRequest.Controllers.ServiceRequestsController.GetServiceRequest">
+            <summary>
+            Retorna lista de chamados
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSCServiceRequest.Controllers.ServiceRequestsController.GetServiceRequest(System.Int64)">
+            <summary>
+            Retorna chamado pelo id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CSCServiceRequest.Controllers.ServiceRequestsController.PutServiceRequest(System.Int64,CSCServiceRequest.Models.ServiceRequest)">
+            <summary>
+            Edita chamado
+            </summary>
+            <param name="id"></param>
+            <param name="serviceRequest"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CSCServiceRequest.Controllers.ServiceRequestsController.PostServiceRequest(CSCServiceRequest.Models.ServiceRequest)">
+            <summary>
+            Cadastra chamado e adiciona na fila do kafka
+            </summary>
+            <param name="serviceRequest"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CSCServiceRequest.Controllers.ServiceRequestsController.DeleteServiceRequest(System.Int64)">
+            <summary>
+            Deleta chamado
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CSCServiceRequest.Controllers.ServiceRequestsController.PutOnKafkaQueue(CSCServiceRequest.Models.ServiceRequest)">
+            <summary>
+            Adiciona o item na fila do Kafka
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>UserAPI</name>
+    </assembly>
+    <members>
+        <member name="M:UserAPI.Controllers.UsersController.GetUsers">
+            <summary>
+            Retorna lista de usuários
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UserAPI.Controllers.UsersController.GetUsers(System.Int64)">
+            <summary>
+            Retorna usuário pelo id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UserAPI.Controllers.UsersController.PutUsers(System.Int64,UserAPI.Models.Users)">
+            <summary>
+            Atualiza um usuário
+            </summary>
+            <param name="id"></param>
+            <param name="users"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UserAPI.Controllers.UsersController.MarkToWatchLater(System.Int64,System.Int64)">
+            <summary>
+            Marca o filme para ser assistido depois
+            </summary>
+            <param name="userId"></param>
+            <param name="movieId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UserAPI.Controllers.UsersController.Watched(System.Int64,System.Int64)">
+            <summary>
+            Marca o filme como assistido pelo usuário
+            </summary>
+            <param name="userId"></param>
+            <param name="movieId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UserAPI.Controllers.UsersController.MostWatched">
+            <summary>
+            Retorna os filmes ordernados pelos mais vistos
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UserAPI.Controllers.UsersController.PostUsers(UserAPI.Models.Users)">
+            <summary>
+            Inclui um usuário
+            </summary>
+            <param name="users"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UserAPI.Controllers.UsersController.DeleteUsers(System.Int64)">
+            <summary>
+            Deleta um usuário
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

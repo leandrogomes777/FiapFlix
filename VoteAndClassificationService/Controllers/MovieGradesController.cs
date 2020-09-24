@@ -24,6 +24,10 @@ namespace VoteAndClassificationService.Controllers
         }
 
         // GET: api/MovieGrades
+        /// <summary>
+        /// Lista todas as notas dadas a todos os filmes 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MovieGrade>>> GetMovieGrade()
         {
@@ -31,6 +35,11 @@ namespace VoteAndClassificationService.Controllers
         }
 
         // GET: api/MovieGrades/5
+        /// <summary>
+        /// retorna uma nota de um filme pelo id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<MovieGrade>> GetMovieGrade(long id)
         {
@@ -47,6 +56,12 @@ namespace VoteAndClassificationService.Controllers
         // PUT: api/MovieGrades/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /// <summary>
+        /// Edita uma nota
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="movieGrade"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutMovieGrade(long id, MovieGrade movieGrade)
         {
@@ -79,6 +94,11 @@ namespace VoteAndClassificationService.Controllers
         // POST: api/MovieGrades
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /// <summary>
+        /// Cadastra uma nota para um filme
+        /// </summary>
+        /// <param name="movieGrade"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<MovieGrade>> PostMovieGrade(MovieGrade movieGrade)
         {
@@ -89,6 +109,11 @@ namespace VoteAndClassificationService.Controllers
         }
 
         // DELETE: api/MovieGrades/5
+        /// <summary>
+        /// Deleta uma nota pelo id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult<MovieGrade>> DeleteMovieGrade(long id)
         {
@@ -109,6 +134,11 @@ namespace VoteAndClassificationService.Controllers
             return _context.MovieGrade.Any(e => e.MovieGradeID == id);
         }
 
+        /// <summary>
+        /// Retorna filmes ordenados pela nota média
+        /// </summary>
+        /// <param name="lenght"></param>
+        /// <returns></returns>
         [HttpGet("getmoviesorderedbygrade/{lenght?}")]
         public async Task<ActionResult<IEnumerable<long>>> GetMoviesOrderedByGrade(int? lenght = 50)
         { 
