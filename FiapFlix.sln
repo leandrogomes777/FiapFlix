@@ -7,13 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieAPI", "MovieAPI\MovieA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VoteAndClassificationService", "VoteAndClassificationService\VoteAndClassificationService.csproj", "{84AD0066-895C-4955-88F9-CF648042786E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSCConsumerServiceConsume", "CSCConsumerService\CSCConsumerServiceConsume.csproj", "{EE219EAC-E22C-4726-814A-ED054F93B765}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserAPI", "UserAPI\UserAPI.csproj", "{8601A805-5BC9-4003-95D8-2F43766F41FD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSCServiceRequest", "CSCServiceRequest\CSCServiceRequest.csproj", "{A18974ED-E6F8-4CC6-BA88-7B591CFEA2A2}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{FAB85275-E08A-42DE-B892-5AF014F19E36}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSCServiceConsumer", "CSCServiceConsumer\CSCServiceConsumer\CSCServiceConsumer.csproj", "{A07DB65A-9056-420D-B895-DDA5A5D35BAC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,14 +39,6 @@ Global
 		{84AD0066-895C-4955-88F9-CF648042786E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{84AD0066-895C-4955-88F9-CF648042786E}.Release|x64.ActiveCfg = Release|Any CPU
 		{84AD0066-895C-4955-88F9-CF648042786E}.Release|x64.Build.0 = Release|Any CPU
-		{EE219EAC-E22C-4726-814A-ED054F93B765}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EE219EAC-E22C-4726-814A-ED054F93B765}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EE219EAC-E22C-4726-814A-ED054F93B765}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{EE219EAC-E22C-4726-814A-ED054F93B765}.Debug|x64.Build.0 = Debug|Any CPU
-		{EE219EAC-E22C-4726-814A-ED054F93B765}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EE219EAC-E22C-4726-814A-ED054F93B765}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EE219EAC-E22C-4726-814A-ED054F93B765}.Release|x64.ActiveCfg = Release|Any CPU
-		{EE219EAC-E22C-4726-814A-ED054F93B765}.Release|x64.Build.0 = Release|Any CPU
 		{8601A805-5BC9-4003-95D8-2F43766F41FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8601A805-5BC9-4003-95D8-2F43766F41FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8601A805-5BC9-4003-95D8-2F43766F41FD}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -71,6 +63,14 @@ Global
 		{FAB85275-E08A-42DE-B892-5AF014F19E36}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FAB85275-E08A-42DE-B892-5AF014F19E36}.Release|x64.ActiveCfg = Release|Any CPU
 		{FAB85275-E08A-42DE-B892-5AF014F19E36}.Release|x64.Build.0 = Release|Any CPU
+		{A07DB65A-9056-420D-B895-DDA5A5D35BAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A07DB65A-9056-420D-B895-DDA5A5D35BAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A07DB65A-9056-420D-B895-DDA5A5D35BAC}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A07DB65A-9056-420D-B895-DDA5A5D35BAC}.Debug|x64.Build.0 = Debug|Any CPU
+		{A07DB65A-9056-420D-B895-DDA5A5D35BAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A07DB65A-9056-420D-B895-DDA5A5D35BAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A07DB65A-9056-420D-B895-DDA5A5D35BAC}.Release|x64.ActiveCfg = Release|Any CPU
+		{A07DB65A-9056-420D-B895-DDA5A5D35BAC}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -5,16 +5,16 @@ WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["CSCConsumerServiceConsume/CSCConsumerServiceConsumeConsume.csproj", "CSCConsumerServiceConsume/"]
-RUN dotnet restore "CSCConsumerServiceConsume/CSCConsumerServiceConsumeConsume.csproj"
+COPY ["CSCConsumerServiceConsume/CSCConsumerServiceConsume.csproj", "CSCConsumerServiceConsume/"]
+RUN dotnet restore "CSCConsumerServiceConsume/CSCConsumerServiceConsume.csproj"
 COPY . .
 WORKDIR "/src/CSCConsumerServiceConsume"
-RUN dotnet build "CSCConsumerServiceConsumeConsume.csproj" -c Release -o /app/build
+RUN dotnet build "CSCConsumerServiceConsume.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "CSCConsumerServiceConsumeConsume.csproj" -c Release -o /app/publish
+RUN dotnet publish "CSCConsumerServiceConsume.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "CSCConsumerServiceConsumeConsume.dll"]
+ENTRYPOINT ["dotnet", "CSCConsumerServiceConsume.dll"]
