@@ -4,7 +4,7 @@ using System;
 using System.IO;
 using System.Threading;
 
-namespace CSCConsumerService
+namespace CSCConsumerServiceConsume
 {
     public class Program
     {

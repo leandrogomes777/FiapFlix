@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "CSCConsumerServiceConsume": {
+    "CSCConsumerServiceConsumeConsume": {
       "commandName": "Project"
     },
     "Docker": {
