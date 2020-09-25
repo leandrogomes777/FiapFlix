@@ -195,8 +195,8 @@ namespace UserAPI.Controllers
         /// Retorna os filmes ordernados pelos mais vistos
         /// </summary>
         /// <returns></returns>
-        [HttpGet("getmostwatched")]
-        public async Task<ActionResult<Dictionary<long, long>>> MostWatched()
+        [HttpGet("getmostwatched/{lenght?}")]
+        public async Task<ActionResult<Dictionary<long, long>>> MostWatched(int? lenght = 50)
         {
             try
             {

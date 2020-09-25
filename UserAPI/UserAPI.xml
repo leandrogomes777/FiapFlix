@@ -41,7 +41,7 @@
             <param name="movieId"></param>
             <returns></returns>
         </member>
-        <member name="M:UserAPI.Controllers.UsersController.MostWatched">
+        <member name="M:UserAPI.Controllers.UsersController.MostWatched(System.Nullable{System.Int32})">
             <summary>
             Retorna os filmes ordernados pelos mais vistos
             </summary>

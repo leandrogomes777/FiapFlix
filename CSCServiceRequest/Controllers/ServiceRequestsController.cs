@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using CSCServiceRequest.Models;
 using Confluent.Kafka;
 using System.Text.Json;
+using Microsoft.Extensions.Configuration;
 
 namespace CSCServiceRequest.Controllers
 {
@@ -16,10 +17,12 @@ namespace CSCServiceRequest.Controllers
     public class ServiceRequestsController : ControllerBase
     {
         private readonly DatabaseContext _context;
+        private readonly IConfiguration _configuration;
 
-        public ServiceRequestsController(DatabaseContext context)
+        public ServiceRequestsController(DatabaseContext context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
 
         // GET: api/ServiceRequests
@@ -146,7 +149,7 @@ namespace CSCServiceRequest.Controllers
         {
             var config = new ProducerConfig
             {
-                BootstrapServers = "192.168.0.22:9092"
+                BootstrapServers = _configuration["KafkaServer"]
             };
 
             var producer = new ProducerBuilder<Null, string>(config).Build();

@@ -21,6 +21,8 @@ namespace MovieAPI.Controllers
 
         private HttpClient _clientVoteAndClassification;
 
+        private HttpClient _clientUsers;
+
         public MoviesController(DatabaseContext context, IConfiguration configurarion)
         {
             _context = context;
@@ -30,8 +32,10 @@ namespace MovieAPI.Controllers
             clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
 
             _clientVoteAndClassification = new HttpClient(clientHandler);
-
             _clientVoteAndClassification.BaseAddress = new Uri(_configuration["ClassificationAndVoteService"]);
+
+            _clientUsers = new HttpClient(clientHandler);
+            _clientUsers.BaseAddress = new Uri(_configuration["UsersService"]);
         }
 
         // GET: api/Movies
@@ -205,18 +209,17 @@ namespace MovieAPI.Controllers
         [HttpGet("moviesbygenreandmostwatched/{maxLenght}")]
         public async Task<ActionResult<IEnumerable<Movies>>> GetMoviesByGenresAndMostWatched (long maxLenght)
         {
-            HttpResponseMessage response = await _clientVoteAndClassification.
-                                                                GetAsync($"getmoviesorderedbygrade/{maxLenght}");
+            HttpResponseMessage response = await _clientUsers.GetAsync($"/api/Users/getmostwatched/{maxLenght}");
 
             if (response.IsSuccessStatusCode)
             {
-                List<long> classification = JsonConvert.DeserializeObject<List<long>>(response.Content.ReadAsStringAsync().Result);
+                Dictionary<long, long> classification = JsonConvert.DeserializeObject<Dictionary<long,long>>(response.Content.ReadAsStringAsync().Result);
 
                 var allResults = await _context.Movies.ToListAsync();
 
                 var result = from a in allResults.Select((r, i) => new { item = r, Index = i })
                              from b in classification.Select((r, i) => new { item = r, Index = i })
-                                               .Where(b => a.item.MovieId == b.item).DefaultIfEmpty()
+                                               .Where(b => a.item.MovieId == b.item.Key).DefaultIfEmpty()
                              orderby (b == null ? allResults.Count() + a.Index : b.Index)
                              select a.item;
 

@@ -1,17 +1,24 @@
 ﻿using Confluent.Kafka;
+using Microsoft.Extensions.Configuration;
 using System;
+using System.IO;
 using System.Threading;
 
 namespace CSCConsumerService
 {
-    class Program
+    public class Program
     {
+        static IConfiguration _config;
         private static void Main(string[] args)
         {
+            _config = new ConfigurationBuilder()
+               .AddJsonFile("appsettings.json", true, true)
+               .Build();
+
             var config = new ConsumerConfig
             {
                 GroupId = "csc_service",
-                BootstrapServers = "192.168.0.22:9092",
+                BootstrapServers = _config["KafkaServer"] ,
                 AutoOffsetReset = AutoOffsetReset.Earliest
             };
 
